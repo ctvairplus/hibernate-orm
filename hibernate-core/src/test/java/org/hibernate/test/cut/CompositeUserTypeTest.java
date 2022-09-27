@@ -338,4 +338,21 @@ public class CompositeUserTypeTest extends BaseCoreFunctionalTestCase {
 		}
 	}
 
+	@Test
+	public void testImmutableCutMerge() {
+		Session s = openSession();
+		org.hibernate.Transaction t = s.beginTransaction();
+
+		Authorization auth = new Authorization();
+		auth.setValue(new MonetoryAmount(new BigDecimal(1.5), Currency.getInstance("USD")));
+		s.merge(auth);
+
+		List result = s.createQuery("from Authorization auth where auth.value.amount > 1.0 and auth.value.currency = 'USD'").list();
+		assertEquals( result.size(), 1 );
+
+		s.delete(auth);
+		t.commit();
+		s.close();
+	}
+
 }

@@ -49,4 +49,14 @@
 		</property>
 	</class>	
 
+	<class name="Authorization" table="Authz">
+		<id name="id">
+			<generator class="native"/>
+		</id>
+		<property name="value" type="immutableMoney">
+			<column name="amount" not-null="true"/>
+			<column name="currency" not-null="true"/>
+		</property>
+	</class>
+
 </hibernate-mapping>
